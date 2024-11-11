@@ -10,8 +10,8 @@ resource "aws_db_subnet_group" "my_db_subnet_group" {
 resource "aws_db_instance" "my_mysql_instance" {
   allocated_storage    = 20
   engine               = "mysql"
-  engine_version       = "8.0.32"  # Use uma versão suportada
-  instance_class       = "db.t3.micro"  # Use uma classe de instância suportada
+  engine_version       = "8.0.32"
+  instance_class       = "db.t3.micro"
   username             = "nikao"
   password             = "laravelnew"
   parameter_group_name = "default.mysql8.0"
