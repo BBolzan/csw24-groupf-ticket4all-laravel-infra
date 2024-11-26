@@ -7,7 +7,7 @@ resource "aws_db_subnet_group" "my_db_subnet_group" {
   }
 }
 
-resource "aws_db_instance" "my_mysql_instance" {
+resource "aws_db_instance" "mysql_instance" {
   allocated_storage    = 20
   engine               = "mysql"
   engine_version       = "8.0.32"
@@ -18,9 +18,9 @@ resource "aws_db_instance" "my_mysql_instance" {
   skip_final_snapshot  = true
   db_subnet_group_name = aws_db_subnet_group.my_db_subnet_group.name
 
-  vpc_security_group_ids = [aws_security_group.new_api_access.id]
+  vpc_security_group_ids = [aws_security_group.api_access.id]
 
   tags = {
-    Name = "MySQL-RDS"
+    Name = "MySQL instance"
   }
 }

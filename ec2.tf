@@ -3,22 +3,22 @@ resource "tls_private_key" "key_aws" {
   rsa_bits  = 4096
 }
 
-resource "aws_key_pair" "my_new_key_pair" {
-  key_name   = "my-new-ec2-key-unique"  # Alterar o nome da chave
+resource "aws_key_pair" "key_pair" {
+  key_name   = "my-new-ec2-key"
   public_key = tls_private_key.key_aws.public_key_openssh
 }
 
-resource "aws_instance" "instance_ec2" {
+resource "aws_instance" "new_instance_ec2" {
   ami           = "ami-0866a3c8686eaeeba"
   instance_type = "t2.micro"
-  key_name      = aws_key_pair.my_new_key_pair.key_name
+  key_name      = aws_key_pair.key_pair.key_name
   subnet_id     = aws_subnet.public_a.id
   associate_public_ip_address = true
 
-  vpc_security_group_ids = [aws_security_group.new_api_access.id]
+  vpc_security_group_ids = [aws_security_group.api_access.id]
 
   tags = {
-    Name = "new-ec2"
+    Name = "my-new-ec2"
   }
 
   user_data = <<-EOF

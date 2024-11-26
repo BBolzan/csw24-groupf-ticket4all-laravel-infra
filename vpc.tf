@@ -1,12 +1,19 @@
 terraform {
-    required_providers {
-        aws = "~> 5.0"
+  required_providers {
+    aws = "~> 5.0"
+  }
+
+  backend "remote" {
+    organization = "trab_construcao_software_ticket"
+
+    workspaces {
+      name = "csw24-groupf-ticket4all-laravel-infra"
     }
+  }
 }
 
-# Configure the AWS Provider
 provider "aws" {
-    region = "us-east-1"
+  region = "us-east-1"
 }
 
 resource "aws_vpc" "main" {
@@ -19,7 +26,7 @@ resource "aws_vpc" "main" {
 
 resource "aws_subnet" "public_a" {
   vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.0.1.0/24"  # Ajuste o bloco CIDR para evitar conflitos
+  cidr_block        = "10.0.1.0/24"
   availability_zone = "us-east-1a"
 
   tags = {
@@ -29,7 +36,7 @@ resource "aws_subnet" "public_a" {
 
 resource "aws_subnet" "public_b" {
   vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.0.2.0/24"  # Ajuste o bloco CIDR para evitar conflitos
+  cidr_block        = "10.0.2.0/24"
   availability_zone = "us-east-1b"
 
   tags = {
@@ -39,7 +46,7 @@ resource "aws_subnet" "public_b" {
 
 resource "aws_subnet" "private_a" {
   vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.0.3.0/24"  # Ajuste o bloco CIDR para evitar conflitos
+  cidr_block        = "10.0.3.0/24"
   availability_zone = "us-east-1a"
 
   tags = {
@@ -49,7 +56,7 @@ resource "aws_subnet" "private_a" {
 
 resource "aws_subnet" "private_b" {
   vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.0.4.0/24"  # Ajuste o bloco CIDR para evitar conflitos
+  cidr_block        = "10.0.4.0/24"
   availability_zone = "us-east-1b"
 
   tags = {
@@ -88,9 +95,9 @@ resource "aws_route_table_association" "public_b" {
   route_table_id = aws_route_table.public.id
 }
 
-resource "aws_security_group" "new_api_access" {
+resource "aws_security_group" "api_access" {
   vpc_id      = aws_vpc.main.id
-  name        = "new-API-security-group-T1"
+  name        = "new-API-security-group-T2"
   description = "Security group para permitir SSH, HTTP and laravel port"
 
   ingress {
