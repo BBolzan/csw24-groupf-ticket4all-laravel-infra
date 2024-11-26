@@ -1,7 +1,10 @@
 terraform {
   required_providers {
-    aws = "~> 5.0"
-  }
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+}
 
   backend "remote" {
     organization = "trab_construcao_software_ticket"
