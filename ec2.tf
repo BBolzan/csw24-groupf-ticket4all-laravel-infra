@@ -1,11 +1,11 @@
-resource "tls_private_key" "key_aws" {
+resource "tls_private_key" "aws_key_tls" {
   algorithm = "RSA"
   rsa_bits  = 4096
 }
 
 resource "aws_key_pair" "key_pair" {
   key_name   = "my-new-ec2-key"
-  public_key = tls_private_key.key_aws.public_key_openssh
+  public_key = tls_private_key.aws_key_tls.public_key_openssh
 }
 
 resource "aws_instance" "new_instance_ec2" {
@@ -39,7 +39,7 @@ resource "aws_instance" "new_instance_ec2" {
   EOF
 }
 
-output "private_key_pem" {
-  value     = tls_private_key.key_aws.private_key_pem
+output "new_private_key_pem" {
+  value     = tls_private_key.aws_key_tls.new_private_key_pem
   sensitive = true
 }
