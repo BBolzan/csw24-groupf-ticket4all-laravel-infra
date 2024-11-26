@@ -4,7 +4,7 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 5.0"
     }
-}
+  }
 
   backend "remote" {
     organization = "trab_construcao_software_ticket"
@@ -101,7 +101,7 @@ resource "aws_route_table_association" "public_b" {
 resource "aws_security_group" "api_access" {
   vpc_id      = aws_vpc.main.id
   name        = "new-API-security-group-T2"
-  description = "Security group para permitir SSH, HTTP and laravel port"
+  description = "Security group para permitir SSH, HTTP e porta Laravel"
 
   ingress {
     description = "SSH"
@@ -120,7 +120,7 @@ resource "aws_security_group" "api_access" {
   }
 
   ingress {
-    description = "laravel port"
+    description = "Laravel Port"
     from_port   = 3000
     to_port     = 3000
     protocol    = "tcp"
@@ -132,5 +132,9 @@ resource "aws_security_group" "api_access" {
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "API-Security-Group"
   }
 }
